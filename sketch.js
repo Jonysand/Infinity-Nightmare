@@ -14,6 +14,7 @@ var tempScale = 0;
 var holoHead;
 let videoWidth = 640;
 let videoHeight = 480;
+let heihei;
 
 //--------------
 // face tracking
