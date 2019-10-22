@@ -95,7 +95,7 @@ function hologramize(head, width, height) {
   var resultImg = createGraphics(width, height);
   var imgCopy = head;
 
-  // initial size of each head
+  // initial size of each big head
   imgCopy.resize(initHeadSizeWidth, initHeadSizeHeight);
 
   resultImg.background(0);
