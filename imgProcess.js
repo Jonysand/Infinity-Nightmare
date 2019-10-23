@@ -95,7 +95,7 @@ function hologramize(head, width, height) {
   var resultImg = createGraphics(width, height);
   var imgCopy = head;
 
-  // initial size of each big head
+  // initial size of each head
   imgCopy.resize(initHeadSizeWidth, initHeadSizeHeight);
 
   resultImg.background(0);
@@ -156,7 +156,7 @@ function getPositionsOnHead(positions) {
   var resultPositions = [];
 
   for (var i = 0; i < positions.length; i++) {
-    resultPositions.push([(positions[i][0] - leftMost - headWidth / 2)/head.width*initHeadSizeWidth, (positions[i][1] - topMost - headHeight / 2)/head.height*initHeadSizeHeight]);
+    resultPositions.push([(positions[i][0] - leftMost - headWidth / 2)/headWidth*initHeadSizeWidth, (positions[i][1] - topMost - headHeight / 2)/headHeight*initHeadSizeHeight]);
   }
   return resultPositions;
 }

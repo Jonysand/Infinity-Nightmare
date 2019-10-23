@@ -14,7 +14,6 @@ var tempScale = 0;
 var holoHead;
 let videoWidth = 640;
 let videoHeight = 480;
-let heihei;
 
 //--------------
 // face tracking
@@ -46,6 +45,9 @@ const lightMes = 255;
 function setup() {
   // canvas setup
   var cav = createCanvas(screenHeight * screenScale, screenHeight * screenScale);
+  var x = (windowWidth - width) / 2;
+  var y = (windowHeight - height) / 2;
+  cav.position(x, y);
   background(0);
 
   // video setup
