@@ -1,9 +1,10 @@
 //-------
 // canvas
 //-------
+var cav;
 const screenWidth = 2736;
 const screenHeight = 1824;
-const screenScale = 0.4;
+const screenScale = 0.54;
 
 //------
 // video
@@ -23,8 +24,10 @@ var videoInput;
 var positions = [];
 var positionsOnPicture = [];
 var head;
-var initHeadSizeWidth = screenHeight * screenScale/4;
-var initHeadSizeHeight = screenHeight * screenScale/4;
+var initHeadSizeWidth = screenHeight * screenScale/5;
+var initHeadSizeHeight = screenHeight * screenScale/5;
+var dr = 0;
+let maxDr = 200;
 
 //-----------
 // microphone
@@ -37,14 +40,14 @@ let noiseSmoother;
 // serial
 //-------
 var serial;
-const port = "/dev/cu.usbmodem1432201";
+const port = "COM5";
 const lightMes = 255;
 
 
 
 function setup() {
   // canvas setup
-  var cav = createCanvas(screenHeight * screenScale, screenHeight * screenScale);
+  cav = createCanvas(screenHeight * screenScale, screenHeight * screenScale);
   var x = (windowWidth - width) / 2;
   var y = (windowHeight - height) / 2;
   cav.position(x, y);
@@ -80,7 +83,7 @@ function draw() {
   micLevel = mic.getLevel();
   // soundOffset = noiseSmoother.getBGoffset(micLevel);
   // tempScale = updateScale(tempScale, soundOffset);
-  tempScale = micLevel;
+  tempScale = micLevel*1.3;
 
   //------------------
   // image processing

@@ -23,6 +23,7 @@ function processPipline() {
     snapshot.mask(maskFace);
     head = cropImage(snapshot, positions);
     head.filter(GRAY);
+    dr = 0;
   }
 }
 
@@ -156,7 +157,7 @@ function getPositionsOnHead(positions) {
   var resultPositions = [];
 
   for (var i = 0; i < positions.length; i++) {
-    resultPositions.push([(positions[i][0] - leftMost - headWidth / 2)/headWidth*initHeadSizeWidth, (positions[i][1] - topMost - headHeight / 2)/headHeight*initHeadSizeHeight]);
+    resultPositions.push([(positions[i][0] - leftMost - headWidth / 2) / headWidth * initHeadSizeWidth, (positions[i][1] - topMost - headHeight / 2) / headHeight * initHeadSizeHeight]);
   }
   return resultPositions;
 }
@@ -192,45 +193,68 @@ function drawBloodEachHead(positions) {
   noStroke();
   for (var i = 0; i < positions.length; i++) {
     // set the color of the ellipse based on position on screen
-    if (i < 32) {
+    if (i == 25 || i == 30) {
+      fill(0, 255, 0);
+      bloodTear(positions[i][0] * (1 + tempScale), positions[i][1] * (1 + tempScale), 10, dr);
+    }
+    // else if (i < 32) {
       // fill(0, 255, 0);
       // ellipse(positions[i][0] * (1 + tempScale), positions[i][1] * (1 + tempScale), 10, 10);
-      drawBumpGradient(positions[i][0] * (1 + tempScale), positions[i][1] * (1 + tempScale), 10);
-    } else if (i == 32) {
-      // fill(0, 255, 0);
-      // ellipse(positions[i][0] * (1 + tempScale), positions[i][1] * (1 + tempScale), 10, 10);
-      drawBumpGradient(positions[i][0] * (1 + tempScale), positions[i][1] * (1 + tempScale), 10);
-    } else if (i == 44 || i == 50) {
-      // fill(255, 0, 0);
+    //   drawBumpGradient(positions[i][0] * (1 + tempScale), positions[i][1] * (1 + tempScale), 10);
+    // } 
+    // else if (i == 32) {
+    //   // fill(0, 255, 0);
+    //   // ellipse(positions[i][0] * (1 + tempScale), positions[i][1] * (1 + tempScale), 10, 10);
+    //   drawBumpGradient(positions[i][0] * (1 + tempScale), positions[i][1] * (1 + tempScale), 10);
+    // } 
+    else if (i == 44 || i == 50) {
+      fill(255, 0, 0);
       // rect(positions[i][0] * (1 + tempScale), positions[i][1] * (1 + tempScale), 5, 25);
-      drawBloodGradient(positions[i][0] * (1 + tempScale), positions[i][1] * (1 + tempScale), 5, 25);
-    } else if (i == 42 || i == 43 || i == 25 || i == 30) {
-      // fill(255, 0, 0);
+      // drawBloodGradient(positions[i][0] * (1 + tempScale), positions[i][1] * (1 + tempScale), 5, 25);
+      bloodTear(positions[i][0] * (1 + tempScale), positions[i][1] * (1 + tempScale), 10, dr);
+    } else if (i == 42 || i == 43 || i == 25 || i == 30|| i==23 || i==28) {
+      fill(255, 0, 0);
       // rect(positions[i][0] * (1 + tempScale), positions[i][1] * (1 + tempScale), 5, 40);
-      drawBloodGradient(positions[i][0] * (1 + tempScale), positions[i][1] * (1 + tempScale), 5, 40);
+      // drawBloodGradient(positions[i][0] * (1 + tempScale), positions[i][1] * (1 + tempScale), 5, 40);
+      bloodTear(positions[i][0] * (1 + tempScale), positions[i][1] * (1 + tempScale), 10, dr);
     }
   }
+  if (dr < maxDr) {
+    dr += 0.3;
+  }
 }
 
-function drawBumpGradient (x,y,radius){
+function drawBumpGradient(x, y, radius) {
   noFill();
-  let c1 = color(0,255*abs(sin(millis()/500)),0);
-  let c2 = color(0,255*abs(sin(millis()/500+PI/4)),0);
+  let c1 = color(0, 255 * abs(sin(millis() / 500)), 0);
+  let c2 = color(0, 255 * abs(sin(millis() / 500 + PI / 4)), 0);
   for (let r = 1; r <= radius; r++) {
-    let inter = map(r, 1, radius , 0, 1);
+    let inter = map(r, 1, radius, 0, 1);
     let c = lerpColor(c1, c2, inter);
     stroke(c);
-    ellipse(x,y,r,r);
+    ellipse(x, y, r, r);
   }
 }
 
-function drawBloodGradient(x,y,w,h){
-  let c1 = color(255*abs(sin(millis()/500)),0,0);
-  let c2 = color(255*abs(sin(millis()/500+PI/4)),0,0);
+function drawBloodGradient(x, y, w, h) {
+  let c1 = color(255 * abs(sin(millis() / 500)), 0, 0);
+  let c2 = color(255 * abs(sin(millis() / 500 + PI / 4)), 0, 0);
   for (let i = y; i <= y + h; i++) {
-      let inter = map(i, y, y + h, 0, 1);
-      let c = lerpColor(c2, c1, inter);
-      stroke(c);
-      line(x, i, x + w, i);
+    let inter = map(i, y, y + h, 0, 1);
+    let c = lerpColor(c2, c1, inter);
+    stroke(c);
+    line(x, i, x + w, i);
   }
+}
+
+function bloodTear(x, y, r, h) {
+  fill(255, 0, 0);
+  noStroke();
+  beginShape();
+  vertex(x, y);
+  vertex(x + r, y + h);
+  arc(x, y + h, 2 * r, 2 * r, 0, PI);
+  vertex(x - r, y + h);
+  vertex(x, y);
+  endShape(CLOSE);
 }
