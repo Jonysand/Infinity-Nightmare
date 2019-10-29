@@ -44,15 +44,12 @@ So instead of using digital output to drive the flashlight, we use a transistor 
 #### - Binary data selection
 To ensure that the message is sent fast and correctly, we sent binary data `0` from Arduino to p5 through serial, and binary data `255` from p5 to Arduino. 
 
-The reason we choose `0` and `255` is that, when we sent binary data, it is sent in the format of the following:
-|0|0|0|0|0|0|0|0|
-|-|-|-|-|-|-|-|-|
-So when we sent `0` like above and if there's noise in the channel, the message would look like:
-|0|0|1|0|0|0|0|0|
-|-|-|-|-|-|-|-|-|
-where the third digit is noised. However, little chance will it be that the message become `255`, which is in the format of following:
-|1|1|1|1|1|1|1|1|
-|-|-|-|-|-|-|-|-|
+The reason we choose `0` and `255` is that, when we sent binary data, it is sent in the format of the following:<br>
+|0|0|0|0|0|0|0|0|<br>
+So when we sent `0` like above and if there's noise in the channel, the message would look like:<br>
+|0|0|1|0|0|0|0|0|<br>
+where the third digit is noised. However, little chance will it be that the message become `255`, which is in the format of following:<br>
+|1|1|1|1|1|1|1|1|<br>
 Nonetheless, in our project the massege if transmitted through cable, which is pretty stable. But this strategy is useful when it's under wireless communication environment.
 
 #### - Time synchronization
