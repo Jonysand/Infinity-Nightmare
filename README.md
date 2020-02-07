@@ -15,7 +15,7 @@
 <!-- vim-markdown-toc -->
 
 ## Description
-This is a course[*Intro to Physical Computing*] midterm, Holloween theme project, designed and implelmented by <b>*Fanyi Pan*</b> and <b>*Yongkun Li*</b>.
+This is a course[*Intro to Physical Computing*] midterm, Helloween theme project, designed and implelmented by <b>*Fanyi Pan*</b> and <b>*Yongkun Li*</b>.
 
 The idea came from the concept of trapping a person in a infinite space, like the soul being prisoned in a small cube, but you can see them from every dimension.
 
